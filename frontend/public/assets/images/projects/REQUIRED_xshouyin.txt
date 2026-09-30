@@ -1,0 +1,3 @@
+IMAGE REQUIRED: xshouyin.jpg
+Used by: src/components/projects/ProjectMedia.jsx, card 01 (XShouyin).
+Put it in THIS folder as xshouyin.jpg. Thumbnail and fallback if the video is missing. About 640x900, portrait.

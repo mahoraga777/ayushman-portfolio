@@ -1,0 +1,3 @@
+VIDEO REQUIRED: xshouyin.mp4
+Used by: src/components/projects/ProjectMedia.jsx, card 01 (XShouyin).
+Put it in THIS folder as xshouyin.mp4. Plays on hover. Muted, 5-15 s loop, portrait or square crop.

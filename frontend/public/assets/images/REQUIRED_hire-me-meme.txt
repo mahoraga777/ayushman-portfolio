@@ -1,0 +1,3 @@
+IMAGE REQUIRED: hire-me-meme.jpg
+Used by: src/components/modals/HireModal.jsx (round picture in the popup).
+Put it in THIS folder as hire-me-meme.jpg. Square, 400x400 or larger. Falls back to an online meme if missing.

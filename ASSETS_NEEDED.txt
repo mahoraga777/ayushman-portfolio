@@ -1,0 +1,19 @@
+ASSETS THIS WEBSITE EXPECTS (inside frontend/public/assets/). Missing files are fine: fallbacks are built in.
+
+  videos/background.mp4            full-screen looping background (BackgroundScene.jsx)
+  images/hire-me-meme.jpg          picture in the HIRE ME popup (HireModal.jsx)
+  images/stats/leetcode.jpg          optional background picture of the LeetCode rating card (StatCard.jsx)
+  images/stats/codeforces.jpg          optional background picture of the Codeforces rating card (StatCard.jsx)
+  images/stats/atcoder.jpg          optional background picture of the AtCoder rating card (StatCard.jsx)
+  videos/projects/xshouyin.mp4   hover video, card 01 XShouyin
+  images/projects/xshouyin.jpg   thumbnail/fallback, card 01 XShouyin
+  videos/projects/portfolio.mp4   hover video, card 02 Portfolio Website
+  images/projects/portfolio.jpg   thumbnail/fallback, card 02 Portfolio Website
+  videos/projects/cybersec.mp4   hover video, card 03 Cybersecurity
+  images/projects/cybersec.jpg   thumbnail/fallback, card 03 Cybersecurity
+  videos/projects/fastfetch-logo.mp4   hover video, card 04 Fastfetch Logo
+  images/projects/fastfetch-logo.jpg   thumbnail/fallback, card 04 Fastfetch Logo
+  videos/projects/classified-system.mp4   hover video, card 05 Classified (system dev)
+  images/projects/classified-system.jpg   thumbnail/fallback, card 05 Classified (system dev)
+  videos/projects/classified-cp.mp4   hover video, card 06 Classified (CP sheet)
+  images/projects/classified-cp.jpg   thumbnail/fallback, card 06 Classified (CP sheet)

@@ -1,0 +1,3 @@
+IMAGE OPTIONAL: leetcode.jpg
+Used by: src/components/hero/StatCard.jsx, the LeetCode rating card background.
+Put it in THIS folder as leetcode.jpg. Landscape, about 800x600. The card is fully colored without it.

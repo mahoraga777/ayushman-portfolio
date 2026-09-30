@@ -1,0 +1,3 @@
+IMAGE REQUIRED: portfolio.jpg
+Used by: src/components/projects/ProjectMedia.jsx, card 02 (Portfolio Website).
+Put it in THIS folder as portfolio.jpg. Thumbnail and fallback if the video is missing. About 640x900, portrait.

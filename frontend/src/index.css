@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Custom utilities (clip shapes + 3D flip helpers) ---------- */
+@layer utilities {
+  .clip-slant-right { clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
+  .clip-slant-left { clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%); }
+  .clip-hero-card { clip-path: polygon(25% 0, 100% 0, 75% 100%, 0% 100%); }
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .backface-hidden { backface-visibility: hidden; }
+  .rotate-y-180 { transform: rotateY(180deg); }
+}
+
+/* ---------- Theme variables (dark by default, `html.light` switches to bright) ---------- */
+:root { --page-bg: #000; }
+html.light { --page-bg: #f3f3f7; }
+
+html { scroll-behavior: smooth; }
+section[id], footer[id] { scroll-margin-top: 2rem; }
+body { background: var(--page-bg); overflow-x: hidden; font-family: 'Oswald', 'Impact', sans-serif; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--page-bg); }
+::-webkit-scrollbar-thumb { background: #ff1fc3; }
+
+/* ---------- Background layers ---------- */
+.app-root { background: var(--page-bg); }
+.scene-base { background: var(--page-bg); }
+
+/* Slowly shifting color gradient (brighter than before so the video is easier to see) */
+.bg-animated {
+  background: linear-gradient(120deg, #1a0020, #2a003a, #1a0606, #001a1f);
+  background-size: 300% 300%;
+  animation: colorShift 25s ease-in-out infinite;
+  opacity: 0.5;
+}
+@keyframes colorShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* Background video: much more visible now (was 20% opacity + fully grayscale) */
+.scene-video {
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  filter: grayscale(0.3);
+}
+
+/* Halftone dots: still there, just slightly calmer so they do not fight the video */
+.halftone {
+  background-image: radial-gradient(rgba(255,31,195,0.7) 2px, transparent 2.2px), radial-gradient(rgba(25,227,211,0.5) 2px, transparent 2.2px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  opacity: 0.1;
+  animation: halftoneDrift 10s linear infinite;
+}
+@keyframes halftoneDrift { to { background-position: 24px -24px, 36px -12px; } }
+
+/* Edge darkening: lighter than before (was 0.95 black starting at 35%) */
+.vignette { background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.6) 100%); }
+
+/* Streak + shard canvas: slightly reduced, nothing removed */
+.scene-canvas { opacity: 0.85; }
+
+/* Veil behind the Skills section (kept light so the video shows through) */
+.skills-veil { background: rgba(0,0,0,0.2); backdrop-filter: blur(6px); }
+
+/* ---------- LIGHT MODE: bright background, bright dots ---------- */
+html.light .bg-animated {
+  background: linear-gradient(120deg, #ffd6f3, #d4faff, #fff3c4, #e6dcff);
+  background-size: 300% 300%;
+  opacity: 1;
+}
+html.light .scene-video { mix-blend-mode: multiply; filter: none; opacity: 0.35; }
+html.light .halftone { opacity: 0.45; }
+html.light .vignette { background: radial-gradient(ellipse at center, transparent 50%, rgba(255,255,255,0.65) 100%); }
+html.light .scene-canvas { mix-blend-mode: multiply; opacity: 0.9; }
+html.light .skills-veil { background: rgba(255,255,255,0.25); }
+/* Big hero name switches to dark ink so it stays readable on the bright background */
+html.light main h1 { color: #0a0a0a; }
+
+/* ---------- Horizontal glitch ---------- */
+/* The box itself stays still. Two ghost layers show thin HORIZONTAL strips that jump sideways
+   (left/right only, no vertical movement) with a pink / cyan split. */
+.spider-glitch {
+  position: relative;
+  z-index: 1;
+}
+.spider-glitch::before, .spider-glitch::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: transparent;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+}
+.spider-glitch:hover::before {
+  opacity: 1;
+  box-shadow: -6px 0 0 0 #ff1fc3;
+  border: 2px solid #ff1fc3;
+  animation: glitch-strip-1 0.5s steps(1, end) infinite;
+}
+.spider-glitch:hover::after {
+  opacity: 1;
+  box-shadow: 6px 0 0 0 #19e3d3;
+  border: 2px solid #19e3d3;
+  animation: glitch-strip-2 0.6s steps(1, end) infinite;
+}
+/* inset(top right bottom left): every keyframe is a thin horizontal band shifted along X */
+@keyframes glitch-strip-1 {
+  0%   { clip-path: inset(8% -10% 88% -10%);  transform: translateX(-10px); }
+  12%  { clip-path: inset(24% -10% 72% -10%); transform: translateX(8px); }
+  25%  { clip-path: inset(41% -10% 55% -10%); transform: translateX(-6px); }
+  37%  { clip-path: inset(57% -10% 38% -10%); transform: translateX(12px); }
+  50%  { clip-path: inset(70% -10% 27% -10%); transform: translateX(-12px); }
+  62%  { clip-path: inset(82% -10% 15% -10%); transform: translateX(6px); }
+  75%  { clip-path: inset(15% -10% 80% -10%); transform: translateX(-8px); }
+  87%  { clip-path: inset(48% -10% 47% -10%); transform: translateX(10px); }
+}
+@keyframes glitch-strip-2 {
+  0%   { clip-path: inset(88% -10% 8% -10%);  transform: translateX(10px); }
+  12%  { clip-path: inset(62% -10% 34% -10%); transform: translateX(-8px); }
+  25%  { clip-path: inset(33% -10% 62% -10%); transform: translateX(6px); }
+  37%  { clip-path: inset(10% -10% 86% -10%); transform: translateX(-12px); }
+  50%  { clip-path: inset(75% -10% 20% -10%); transform: translateX(12px); }
+  62%  { clip-path: inset(45% -10% 50% -10%); transform: translateX(-6px); }
+  75%  { clip-path: inset(92% -10% 4% -10%);  transform: translateX(8px); }
+  87%  { clip-path: inset(20% -10% 75% -10%); transform: translateX(-10px); }
+}
+
+/* Text glitch: horizontal-only red/cyan text-shadow split */
+.text-glitch { transition: text-shadow 0.2s ease; }
+.text-glitch:hover {
+  animation: text-spider-shadow 0.15s infinite;
+}
+@keyframes text-spider-shadow {
+  0% { text-shadow: 3px 0 2px rgba(255,31,195,0.8), -3px 0 2px rgba(25,227,211,0.8); }
+  25% { text-shadow: -3px 0 4px rgba(255,31,195,0.8), 3px 0 4px rgba(25,227,211,0.8); }
+  50% { text-shadow: 5px 0 1px rgba(255,31,195,0.8), -5px 0 1px rgba(25,227,211,0.8); }
+  75% { text-shadow: -5px 0 3px rgba(255,31,195,0.8), 5px 0 3px rgba(25,227,211,0.8); }
+  100% { text-shadow: 2px 0 4px rgba(255,31,195,0.8), -2px 0 4px rgba(25,227,211,0.8); }
+}
+
+/* ---------- Manga panel section titles ---------- */
+/* Light gray slightly slanted panel, no border, like a comic page cell */
+.manga-panel {
+  background: #f2f2f2;
+  clip-path: polygon(0 0, 100% 0, 98.5% 100%, 1.5% 100%);
+}
+/* Thin slanted "panel cut" line crossing the title */
+.manga-slash {
+  position: absolute;
+  top: -10%;
+  left: 38%;
+  width: 2px;
+  height: 120%;
+  background: #ff5a5a;
+  transform: rotate(-12deg);
+  opacity: 0.85;
+  pointer-events: none;
+}
+/* Faint speed lines in the bottom right corner */
+.manga-lines {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28%;
+  height: 65%;
+  background: repeating-linear-gradient(135deg, rgba(0,0,0,0.12) 0 1px, transparent 1px 10px);
+  pointer-events: none;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) { .bg-animated, .halftone, .spider-glitch, .text-glitch { animation: none !important; } html { scroll-behavior: auto; } }

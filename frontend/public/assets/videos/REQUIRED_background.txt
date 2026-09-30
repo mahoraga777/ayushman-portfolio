@@ -1,0 +1,4 @@
+VIDEO REQUIRED: background.mp4
+Used by: src/components/background/BackgroundScene.jsx (under the tint).
+Put it in THIS folder as background.mp4.
+Muted loop, 1080p or lower, under ~15 MB. Optional: the animated background plays without it.

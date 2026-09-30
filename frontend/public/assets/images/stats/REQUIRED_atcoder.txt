@@ -1,0 +1,3 @@
+IMAGE OPTIONAL: atcoder.jpg
+Used by: src/components/hero/StatCard.jsx, the AtCoder rating card background.
+Put it in THIS folder as atcoder.jpg. Landscape, about 800x600. The card is fully colored without it.

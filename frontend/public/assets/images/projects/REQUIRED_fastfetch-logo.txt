@@ -1,0 +1,3 @@
+IMAGE REQUIRED: fastfetch-logo.jpg
+Used by: src/components/projects/ProjectMedia.jsx, card 04 (Fastfetch Logo).
+Put it in THIS folder as fastfetch-logo.jpg. Thumbnail and fallback if the video is missing. About 640x900, portrait.

@@ -1,0 +1,3 @@
+IMAGE REQUIRED: classified-cp.jpg
+Used by: src/components/projects/ProjectMedia.jsx, card 06 (Classified (CP sheet)).
+Put it in THIS folder as classified-cp.jpg. Thumbnail and fallback if the video is missing. About 640x900, portrait.
