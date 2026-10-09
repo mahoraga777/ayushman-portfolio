@@ -1,6 +1,4 @@
-// Tailwind config: the shared palette is exposed as `hero-*` colors (e.g. bg-hero-red).
 import { palette } from './src/config/palette.js';
-
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {

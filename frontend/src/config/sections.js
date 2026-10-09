@@ -1,4 +1,3 @@
-// Entries of the side menu; `id` must match a section id on the page.
 export const navSections = [
   { id: 'top', label: 'INTRODUCTION' },
   { id: 'about', label: 'ABOUT' },

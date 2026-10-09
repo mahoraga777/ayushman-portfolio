@@ -1,5 +1,3 @@
-// Context that asks "open this link?" before leaving the portfolio.
-// Usage: const requestLink = useLinkConfirm(); requestLink(url, name);
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LinkConfirmModal from '../components/modals/LinkConfirmModal';
@@ -11,7 +9,6 @@ export function LinkConfirmProvider({ children }) {
   const [pending, setPending] = useState(null);
   const requestLink = useCallback((url, name) => {
     if (!url) return;
-    // external links get a confirmation popup, mailto: links open directly
     if (url.startsWith('http')) setPending({ url, name }); 
     else window.location.href = url; 
   }, []);

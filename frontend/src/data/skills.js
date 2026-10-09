@@ -1,38 +1,36 @@
-// Skill groups shown in the Skills section. `accent` is a palette key.
 export const skillGroups = [
   {
     title: 'Languages', accent: 'pink',
-    items: [
-      { name: 'C++', tag: 'Core', info: 'My main language for DSA and competitive programming: 300+ LeetCode problems solved, rating 1600.' },
-      { name: 'Python', tag: 'Core', info: 'Powers the XShouyin gesture daemon, Flask backends, and data handling.' },
-      { name: 'SQL', tag: 'Data', info: 'Used for querying data during threat detection work in the Google Cybersecurity certificate.' },
-      { name: 'HTML & CSS', tag: 'Web', info: 'The front-end foundation of my web projects.' },
-      
+    items: [ 
+      { name: 'C++', info: 'Core DSA & competitive programming language.' }, 
+      { name: 'Python', info: 'ML pipelines, Flask backends, scripting.' }, 
+      { name: 'Go', info: 'Systems programming and backend API development.' },
+      { name: 'SQL', info: 'Database querying & threat detection.' } 
     ],
   },
   {
     title: 'Libraries & Frameworks', accent: 'neonGreen',
-    items: [
-      { name: 'OpenCV', tag: 'Vision', info: 'Image processing on live camera frames, the vision side of XShouyin.' },
-      { name: 'MediaPipe', tag: 'ML', info: 'Runs the gesture recognizer that turns hand movements into mouse and system events.' },
-      { name: 'APIs', tag: 'Integration', info: 'Connecting tools and services together end to end.' },
+    items: [ 
+      { name: 'OpenCV', info: 'Real-time image processing.' }, 
+      { name: 'MediaPipe', info: 'Gesture and skeletal tracking ML.' }, 
+      { name: 'React & Tailwind', info: 'High-performance UI engineering.' }, 
+      { name: 'APIs', info: 'End-to-end service integration.' } 
     ],
   },
   {
     title: 'Tools & DevOps', accent: 'yellow',
-    items: [
-      { name: 'Docker', tag: 'Containers', info: 'Packaging projects into reproducible containers.' },
-      { name: 'Git & GitHub', tag: 'Version control', info: 'Every project lives in version control on GitHub.' },
-      { name: 'Shell Scripting', tag: 'Automation', info: 'Automating repetitive work from the terminal, mostly in Fish.' },
+    items: [ 
+      { name: 'Docker', info: 'Containerized deployment setups.' }, 
+      { name: 'Git & GitHub', info: 'Version control and CI/CD.' }, 
+      { name: 'Shell Scripting', info: 'Automating repetitive Linux tasks.' } 
     ],
   },
   {
-    title: 'Operating Systems', accent: 'cyan',
-    items: [
-      { name: 'Linux (Fedora/Arch/Debian)', tag: 'Native', info: 'My primary environment. Comfortable building low-level system daemons and managing Linux security.' },
-      { name: 'Windows', tag: 'OS', info: 'Comfortable with Windows for everyday development.' },
+    title: 'Specializations', accent: 'orange',
+    items: [ 
+      { name: 'Computer Vision', info: 'Building inference engines that map live physical movements to digital outputs.' }, 
+      { name: 'Automation', info: 'Writing low-level daemons that bind directly to kernel inputs like /dev/uinput.' },
+      { name: 'Data Structures', info: 'Applying advanced algorithmic concepts for optimal execution times.' }
     ],
   },
 ];
-// Colored pills under the skill groups
-export const specializations = ['Computer Vision', 'Digital Image Processing', 'Data Structures & Algorithms', 'Automation'];

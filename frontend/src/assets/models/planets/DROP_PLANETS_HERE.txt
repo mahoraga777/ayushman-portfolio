@@ -1,0 +1,2 @@
+DROP ANY 3D MODELS HERE (.glb or .gltf).
+The website will automatically find them, randomly select them, normalize their size, and spawn them slowly spinning in the background lanes.
