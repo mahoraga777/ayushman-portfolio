@@ -4,6 +4,11 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { SPACESHIP_MODELS, PLANET_MODELS } from '../../config/assets';
 
+const MODEL_CONFIG = {
+  spaceship: { scale: 1.0, rotation: [0, Math.PI, 0] },
+  planet:    { scale: 1.0, rotation: [0, 0, 0] },
+};
+
 class ErrorBoundary extends React.Component {
   state = { hasError: false };
   static getDerivedStateFromError() { return { hasError: true }; }
@@ -13,20 +18,13 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// ---------------------------------------------------------
-// AUTO-SCALING GEOMETRY NORMALIZER 
-// Fixes "cooked" scaling by measuring the 3D bounds and mathematically resizing it.
-// ---------------------------------------------------------
 function SafeModel({ url, isShip, initialPos, speed, rotationSpeed }) {
   const { scene } = useGLTF(url);
   const ref = useRef();
   const currentSpeed = useRef(speed);
 
-  // useMemo completely isolates each model instance and normalizes its scale based on bounding boxes
   const normalizedScene = useMemo(() => {
     const clone = scene.clone();
-    
-    // Measure actual 3D boundaries
     const box = new THREE.Box3().setFromObject(clone);
     const size = new THREE.Vector3();
     box.getSize(size);
@@ -35,22 +33,17 @@ function SafeModel({ url, isShip, initialPos, speed, rotationSpeed }) {
     
     const maxDim = Math.max(size.x, size.y, size.z);
     if (maxDim > 0) {
-      // Spaceships become exactly 5 units wide, Planets become exactly 25 units wide
       const targetSize = isShip ? 5 : 25; 
       const scaleFactor = targetSize / maxDim;
       clone.scale.set(scaleFactor, scaleFactor, scaleFactor);
       
-      // Center the origin point so rotations aren't weird
       clone.position.x = -center.x * scaleFactor;
       clone.position.y = -center.y * scaleFactor;
       clone.position.z = -center.z * scaleFactor;
     }
 
-    // Force materials to be DoubleSide so hollow models don't look broken
     clone.traverse((child) => {
-        if (child.isMesh && child.material) {
-            child.material.side = THREE.DoubleSide;
-        }
+        if (child.isMesh && child.material) child.material.side = THREE.DoubleSide;
     });
 
     const group = new THREE.Group();
@@ -67,7 +60,6 @@ function SafeModel({ url, isShip, initialPos, speed, rotationSpeed }) {
           ref.current.rotation.x += rotationSpeed.x || 0;
         }
         
-        // Reset Logic - Distinct Lanes for Ships vs Planets
         if (ref.current.position.z > 20) {
            if (isShip) {
              ref.current.position.z = -150; 
@@ -90,16 +82,12 @@ function SafeModel({ url, isShip, initialPos, speed, rotationSpeed }) {
         ref={ref} 
         object={normalizedScene} 
         position={initialPos} 
-        rotation={isShip ? [0, Math.PI, 0] : [0,0,0]} 
+        rotation={isShip ? MODEL_CONFIG.spaceship.rotation : MODEL_CONFIG.planet.rotation} 
     />
   );
 }
 
-// ---------------------------------------------------------
-// FALLBACK GEOMETRY
-// Rendered if folders are empty so the app never crashes
-// ---------------------------------------------------------
-function FallbackShape({ isShip, initialPos, speed, rotationSpeed }) {
+function ProceduralPlanet({ initialPos, speed, rotationSpeed }) {
   const ref = useRef();
   useFrame(() => {
      if(ref.current) {
@@ -109,63 +97,58 @@ function FallbackShape({ isShip, initialPos, speed, rotationSpeed }) {
           ref.current.rotation.x += rotationSpeed.x;
         }
         if (ref.current.position.z > 20) {
-           ref.current.position.z = isShip ? -150 : -300;
-           ref.current.position.x = (Math.random() - 0.5) * (isShip ? 40 : 100);
-           ref.current.position.y = (Math.random() - 0.5) * (isShip ? 20 : 60);
+           ref.current.position.z = -300;
+           ref.current.position.x = (Math.random() - 0.5) * 100;
+           ref.current.position.y = (Math.random() - 0.5) * 60;
         }
      }
   });
 
   return (
     <mesh ref={ref} position={initialPos}>
-      {isShip ? <coneGeometry args={[2, 6, 4]} /> : <sphereGeometry args={[10, 16, 16]} />}
-      <meshStandardMaterial color={isShip ? "#ff1fc3" : "#19e3d3"} wireframe={!isShip} />
+      <sphereGeometry args={[10, 16, 16]} />
+      <meshStandardMaterial color="#19e3d3" wireframe={true} />
     </mesh>
   );
 }
 
 export default function Spaceship3D() {
-  // Select random models from the auto-detected arrays
   const getRandModel = (arr) => arr.length > 0 ? arr[Math.floor(Math.random() * arr.length)] : null;
   
   const [activeShips, setActiveShips] = useState([]);
   const [activePlanets, setActivePlanets] = useState([]);
 
   useEffect(() => {
-    // Generate exactly 2 ships
-    setActiveShips([
-      { id: 's1', url: getRandModel(SPACESHIP_MODELS), pos: [-10, 5, -80], speed: 1.2 },
-      { id: 's2', url: getRandModel(SPACESHIP_MODELS), pos: [15, -8, -130], speed: 1.4 }
-    ]);
-    // Generate exactly 3 planets
-    setActivePlanets([
-      { id: 'p1', url: getRandModel(PLANET_MODELS), pos: [40, 20, -150], speed: 0.15, rot: {y: 0.005, x: 0.002} },
-      { id: 'p2', url: getRandModel(PLANET_MODELS), pos: [-50, -25, -200], speed: 0.25, rot: {y: -0.003, x: 0.001} },
-      { id: 'p3', url: getRandModel(PLANET_MODELS), pos: [35, -30, -250], speed: 0.10, rot: {y: 0.002, x: -0.001} }
-    ]);
+    if (SPACESHIP_MODELS.length > 0) {
+      setActiveShips([
+        { id: 's1', url: getRandModel(SPACESHIP_MODELS), pos: [-10, 5, -80], speed: 1.2 },
+        { id: 's2', url: getRandModel(SPACESHIP_MODELS), pos: [15, -8, -130], speed: 1.4 }
+      ]);
+    }
+    
+    if (PLANET_MODELS.length > 0) {
+      setActivePlanets([
+        { id: 'p1', url: getRandModel(PLANET_MODELS), pos: [40, 20, -150], speed: 0.15, rot: {y: 0.005, x: 0.002} },
+        { id: 'p2', url: getRandModel(PLANET_MODELS), pos: [-50, -25, -200], speed: 0.25, rot: {y: -0.003, x: 0.001} }
+      ]);
+    }
   }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10">
       <ErrorBoundary>
-        {/* dpr restriction stops lag on high-res monitors! */}
         <Canvas camera={{ position: [0, 0, 0], fov: 50 }} dpr={[1, 1.5]}>
           <ambientLight intensity={0.5} />
-          {/* Cyberpunk / Spiderverse 3D Lighting */}
           <directionalLight position={[10, 10, 5]} intensity={2.5} color="#ffffff" />
           <directionalLight position={[-10, -10, -5]} intensity={2} color="#ff1fc3" />
           <directionalLight position={[0, 10, -10]} intensity={1.5} color="#19e3d3" />
           
           <Suspense fallback={null}>
-            {activeShips.map(s => s.url 
-              ? <SafeModel key={s.id} url={s.url} isShip={true} initialPos={s.pos} speed={s.speed} /> 
-              : <FallbackShape key={s.id} isShip={true} initialPos={s.pos} speed={s.speed} />
-            )}
+            {activeShips.map(s => s.url && <SafeModel key={s.id} url={s.url} isShip={true} initialPos={s.pos} speed={s.speed} />)}
+            {activePlanets.map(p => p.url && <SafeModel key={p.id} url={p.url} isShip={false} initialPos={p.pos} speed={p.speed} rotationSpeed={p.rot} />)}
             
-            {activePlanets.map(p => p.url 
-              ? <SafeModel key={p.id} url={p.url} isShip={false} initialPos={p.pos} speed={p.speed} rotationSpeed={p.rot} /> 
-              : <FallbackShape key={p.id} isShip={false} initialPos={p.pos} speed={p.speed} rotationSpeed={p.rot} />
-            )}
+            <ProceduralPlanet initialPos={[20, 30, -100]} speed={0.2} rotationSpeed={{y: 0.005, x: 0.002}} />
+            <ProceduralPlanet initialPos={[-30, -40, -180]} speed={0.15} rotationSpeed={{y: -0.003, x: 0.001}} />
           </Suspense>
         </Canvas>
       </ErrorBoundary>

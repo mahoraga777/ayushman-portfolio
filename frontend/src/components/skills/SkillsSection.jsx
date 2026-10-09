@@ -6,9 +6,9 @@ import SkillGroup from './SkillGroup';
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="w-full py-32 my-16 relative z-20">
+    <section id="skills" className="w-full relative z-20 bg-transparent py-20">
       <SectionTitle title="Skills & Tech" shadow={palette.cyan} />
-      <div className="max-w-6xl mx-auto mt-24 px-6 md:px-10 flex flex-col gap-16">
+      <div className="max-w-5xl mx-auto mt-16 px-6 flex flex-col gap-12">
         {skillGroups.map((group) => <SkillGroup key={group.title} group={group} />)}
       </div>
     </section>

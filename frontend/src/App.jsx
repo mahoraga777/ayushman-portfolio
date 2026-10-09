@@ -12,8 +12,6 @@ import ProjectsSection from './components/projects/ProjectsSection';
 import CredentialsSection from './components/credentials/CredentialsSection';
 import HireModal from './components/modals/HireModal';
 
-const SECTIONS = [HeroSection, AboutSection, SkillsSection, ProjectsSection, CredentialsSection];
-
 export default function App() {
   const [hireOpen, setHireOpen] = useState(false);
   return (
@@ -22,8 +20,12 @@ export default function App() {
         <BackgroundScene />
         <SideMenu />
         <FixedSocials onHireClick={() => setHireOpen(true)} />
-        <main className="relative z-10 w-full flex flex-col items-center pt-16">
-          {SECTIONS.map((Section) => <Section key={Section.name} />)}
+        <main className="relative z-10 w-full flex flex-col items-center">
+          <HeroSection />
+          <AboutSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <CredentialsSection />
         </main>
         <Footer />
         <AnimatePresence>{hireOpen && <HireModal onClose={() => setHireOpen(false)} />}</AnimatePresence>

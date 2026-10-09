@@ -17,10 +17,10 @@ export default function ProjectMedia({ project, playing }) {
   if (media === 'image') return <img src={projectImage(project.slug)} alt={project.title} onError={() => setMedia('none')} className={fit} />;
   return (
     <div className="absolute inset-0 bg-transparent flex flex-col justify-center items-center pl-12 pr-4">
-      <div className="w-16 h-16 border-2 border-dashed border-white/20 rounded-full flex justify-center items-center animate-spin-slow">
-        <span className="text-white/50 text-[10px] font-bold tracking-widest">OFFLINE</span>
+      <div className="w-12 h-12 border-2 border-dashed border-white/20 rounded-full flex justify-center items-center animate-spin-slow">
+        <span className="text-white/50 text-[8px] font-bold tracking-widest">OFFLINE</span>
       </div>
-      <span className="mt-2 text-[10px] text-center text-white/50 font-bold uppercase tracking-widest">{project.stack}</span>
+      <span className="mt-2 text-[8px] text-center text-white/50 font-bold uppercase tracking-widest">{project.stack}</span>
     </div>
   );
 }

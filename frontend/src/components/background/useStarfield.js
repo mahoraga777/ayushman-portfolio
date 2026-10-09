@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createStar, createSpark, drawSparks, rand } from './engine';
 
-const STAR_COUNT = 150; // Optimized count so scrolling doesn't lag
+const STAR_COUNT = 150; 
 const FOV = 400;
 
 export default function useStarfield(canvasRef) {

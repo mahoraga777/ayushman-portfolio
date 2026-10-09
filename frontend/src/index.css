@@ -19,7 +19,6 @@ body { background: #000; overflow-x: hidden; font-family: 'Oswald', 'Impact', sa
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: #19e3d3; }
 
-/* The Original Deep Blue/Black Gradient Animation */
 .bg-animated {
   background: linear-gradient(120deg, #000000, #00122e, #000512, #000000);
   background-size: 300% 300%;

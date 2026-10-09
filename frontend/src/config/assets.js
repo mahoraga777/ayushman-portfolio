@@ -1,4 +1,3 @@
-// Vite magically finds any .glb or .gltf files you drop into these folders
 const shipImports = import.meta.glob('../assets/models/spaceships/*.{glb,gltf}', { eager: true, query: '?url', import: 'default' });
 export const SPACESHIP_MODELS = Object.values(shipImports);
 
