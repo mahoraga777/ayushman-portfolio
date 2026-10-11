@@ -4,5 +4,5 @@ export const certifications = [
 ];
 export const achievements = [
   'Competitive Programming: LeetCode rating 1600 (300+ problems solved)',
-  'Top team from college in ICPC'
+  'ICPC India Preliminary Round — Top team from college | All India Rank 420 (prelims) '
 ];
